@@ -1,0 +1,31 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/e3e1d6b0-913a-42b2-9a41-5665dc4a8139/ # 
+title: hellowworld
+traits:
+  client-id-required:
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+    responses:
+      401:
+        description: Unauthorized or invalid client application credentials
+      500:
+        description: Bad response from authorization server, or WSDL SOAP Fault error
+
+/person:
+  get:
+    is: [client-id-required]
+    displayName: say hello
+    queryParameters:
+      name:
+        required: false
+        type: string
+    responses:
+      200:
+        body:
+          application/json:
+            type: string
+            examples:
+              output: "hello person"
